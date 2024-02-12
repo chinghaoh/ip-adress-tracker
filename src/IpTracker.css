@@ -1,0 +1,70 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.ip-tracker-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1rem;
+    background-image: url('./images/pattern-bg-desktop.png'); 
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.ip-tracker-container > label{
+    color: white;
+}
+
+.ip-input-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 3.2rem;
+}
+
+/* Styles for desktop */
+@media (min-width: 800px) {
+    .ip-text-input {
+      width: 31.25rem ; /* Set max-width to 31.25rem for desktop */
+      border-top-left-radius: 0.313rem; 
+      border-bottom-left-radius: 0.313rem;
+      height: 100%;
+      padding-left:1rem;
+    }
+  }
+  
+  /* Styles for mobile */
+  @media (max-width: 800px) {
+    .ip-tracker-container{
+        display: flex;
+        background-image: url('./images/pattern-bg-mobile.png'); 
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .ip-text-input {
+      width: 70dvw; /* Set width to 80% of the screen for mobile */
+      max-width: none; /* Remove max-width */
+      border-top-left-radius: 0.313rem; 
+      border-bottom-left-radius: 0.313rem;
+      height: 100%;
+      padding-left:1rem;
+    }
+  }
+  
+.arrowIcon-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    width: 2.2rem;
+    height: 100%;
+    border-top-right-radius: 0.313rem; 
+    border-bottom-right-radius: 0.313rem;
+}
+
+

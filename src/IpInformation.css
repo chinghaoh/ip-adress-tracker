@@ -1,0 +1,19 @@
+.ip-information-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background-color: white;
+    border-radius:  0.313rem;
+}
+
+/* Styles for desktop */
+@media (min-width: 800px) {
+    .ip-information-container{
+        width: 68.75rem;
+        padding: 2rem;
+    }
+  }
+  
+  /* Styles for mobile */
+  @media (max-width: 800px) {
+   
+  }
