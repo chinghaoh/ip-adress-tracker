@@ -7,6 +7,8 @@ import IpInformationComponent from './IpInformationComponent';
 
 
 function IpTracker({ onResponseData }) {
+    const apiKey = process.env.REACT_APP_GEO_IPIFY_KEY;
+
     const [isMobile, setIsMobile] = useState(false);
 
     const [ipAdress, setIpAdress] = useState()
@@ -19,7 +21,7 @@ function IpTracker({ onResponseData }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://geo.ipify.org/api/v2/country,city?apiKey=at_bBqkIa3T6evw9TeuEuSMUyNOlfqsz');
+                const response = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -50,7 +52,7 @@ function IpTracker({ onResponseData }) {
         const inputElement = document.querySelector('.ip-text-input');
         const inputValue = inputElement.value;
 
-        fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=at_bBqkIa3T6evw9TeuEuSMUyNOlfqsz&ipAddress=${inputValue}`)
+        fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${inputValue}`)
             .then(response => {
                 // Check if response is successful
                 if (!response.ok) {
