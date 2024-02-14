@@ -4,8 +4,35 @@ import arrowIcon from './images/icon-arrow.svg'
 import IpInformationComponent from './IpInformationComponent';
 
 
-function IpTracker() {
+
+
+function IpTracker({ onResponseData }) {
     const [isMobile, setIsMobile] = useState(false);
+
+    const [ipAdress, setIpAdress] = useState()
+    const [location, setLocation] = useState()
+    const [timezone, setTimezone] = useState()
+    const [isp, setIsp] = useState()
+
+    const [ipAddress, setIpAddress] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('https://geo.ipify.org/api/v2/country,city?apiKey=at_bBqkIa3T6evw9TeuEuSMUyNOlfqsz');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                onResponseData(data)
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // Handle screensize
     useEffect(() => {
         function handleResize() {
             setIsMobile(window.innerWidth < 800);
@@ -18,21 +45,48 @@ function IpTracker() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    function getIpInformation() {
+
+        const inputElement = document.querySelector('.ip-text-input');
+        const inputValue = inputElement.value;
+
+        fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=at_bBqkIa3T6evw9TeuEuSMUyNOlfqsz&ipAddress=${inputValue}`)
+            .then(response => {
+                // Check if response is successful
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Parse response JSON
+                return response.json();
+            })
+            .then(data => {
+                // Set response data in state
+                onResponseData(data)
+                setIpAdress(inputValue)
+                setLocation(data.location.region + "\n" + data.location.city)
+                setTimezone("UTC" + data.location.timezone)
+                setIsp(data.isp)
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
     return (
         <div className={`ip-tracker-container`}>
             <label for="ipTracker">Ip Address Tracker:</label>
             <form className='ip-input-container'>
                 <input className='ip-text-input' type="text" id="ipTracker" name="ipTracker" placeholder='Search for any IP address or domain'></input>
-                <div className='arrowIcon-container'>
+                <div className='arrowIcon-container' onClick={getIpInformation}>
                     <img className='arrowIcon' src={arrowIcon} alt="arrow icon"></img>
                 </div>
             </form>
-
             <div className='ip-information-container'>
-                <IpInformationComponent title={"IP Adress"} value={"test"}></IpInformationComponent>
-                <IpInformationComponent title={"Location"} value={"test"}></IpInformationComponent>
-                <IpInformationComponent title={"Timezone"} value={"test"}></IpInformationComponent>
-                <IpInformationComponent title={"ISP"} value={"test"}></IpInformationComponent>
+                <IpInformationComponent title={"IP Adress"} value={ipAdress}></IpInformationComponent>
+                <IpInformationComponent title={"Location"} value={location}></IpInformationComponent>
+                <IpInformationComponent title={"Timezone"} value={timezone}></IpInformationComponent>
+                <IpInformationComponent title={"ISP"} value={isp}></IpInformationComponent>
             </div>
         </div>
     );

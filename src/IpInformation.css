@@ -3,6 +3,14 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     background-color: white;
     border-radius:  0.313rem;
+    z-index: 2;
+    position: absolute;
+    top: 8.125rem;
+}
+
+.ip-information-section {
+    border-left: 1px solid black; /* Adjust color and width as needed */
+    padding-inline: 20px
 }
 
 /* Styles for desktop */
