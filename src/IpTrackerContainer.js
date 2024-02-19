@@ -10,13 +10,11 @@ function IpTracker({ onResponseData }) {
     const apiKey = process.env.REACT_APP_GEO_IPIFY_KEY;
 
     const [isMobile, setIsMobile] = useState(false);
-
     const [ipAdress, setIpAdress] = useState()
     const [location, setLocation] = useState()
     const [timezone, setTimezone] = useState()
     const [isp, setIsp] = useState()
 
-    const [ipAddress, setIpAddress] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,7 +53,9 @@ function IpTracker({ onResponseData }) {
         fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${inputValue}`)
             .then(response => {
                 // Check if response is successful
+                console.log(response)
                 if (!response.ok) {
+                    alert('Invalid input! Please provide a valid input.');
                     throw new Error('Network response was not ok');
                 }
                 // Parse response JSON
@@ -78,12 +78,12 @@ function IpTracker({ onResponseData }) {
     return (
         <div className={`ip-tracker-container`}>
             <label for="ipTracker">Ip Address Tracker:</label>
-            <form className='ip-input-container'>
-                <input className='ip-text-input' type="text" id="ipTracker" name="ipTracker" placeholder='Search for any IP address or domain'></input>
-                <div className='arrowIcon-container' onClick={getIpInformation}>
-                    <img className='arrowIcon' src={arrowIcon} alt="arrow icon"></img>
-                </div>
-            </form>
+                <form className='ip-input-container'>
+                    <input className='ip-text-input' type="text" id="ipTracker" name="ipTracker" placeholder='Search for any IP address or domain'></input>
+                    <div className='arrowIcon-container' onClick={getIpInformation}>
+                        <img className='arrowIcon' src={arrowIcon} alt="arrow icon"></img>
+                    </div>
+                </form>
             <div className='ip-information-container'>
                 <IpInformationComponent title={"IP Adress"} value={ipAdress}></IpInformationComponent>
                 <IpInformationComponent title={"Location"} value={location}></IpInformationComponent>
