@@ -19,7 +19,6 @@ function IpTracker({ onResponseData }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(apiKey)
                 const response = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
